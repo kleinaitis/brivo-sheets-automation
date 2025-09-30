@@ -29,4 +29,26 @@ async function getBrivoAccessToken() {
     }
 }
 
-getBrivoAccessToken();
+async function getBrivoUsers() {
+
+    const accessToken = await getBrivoAccessToken()
+    const url = 'https://api.brivo.com/v1/api/users'
+
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                'Authorization': `bearer ${accessToken}`,
+                'api-key': `${process.env.API_KEY}`
+            },
+        });
+
+        const data = await response.json();
+        console.log(data.data[0])
+
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
+getBrivoUsers()
